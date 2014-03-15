@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from myproject.myapp.models import Game, UserProfile
+from django.contrib.auth.models import User
 
 from myproject.myapp.models import Document
 from myproject.myapp.forms import DocumentForm
@@ -29,3 +31,70 @@ def list(request):
         {'documents': documents, 'form': form},
         context_instance=RequestContext(request)
     )
+
+
+#@login_required
+def index(request):
+    context = RequestContext(request)
+
+    alive_users = UserProfile.objects.filter(alive=True)
+    dead_users = UserProfile.objects.filter(alive=False)
+
+    # FIXME
+    if Game.objects.all().count() == 0:
+        game = Game(ready_users=0, users_needed=2)
+        game.save()
+
+    context_dict = {}
+
+    context_dict['alive_users'] = alive_users
+    context_dict['dead_users'] = dead_users
+
+    return render_to_response('myapp/index.html', context_dict, context)
+
+#@login_required
+def ready(request):
+    context = RequestContext(request)
+
+    experiment_list = User.objects.all()
+    context_dict = {'experiments': experiment_list}
+
+    # Checks only the last entry of the game table
+    game = Game.objects.all().reverse()[0]
+
+    print game.ready_users
+
+    game.ready_users += 1
+    game.save()
+
+    if game.ready_users >= game.users_needed:
+        HttpResponseRedirect('/myapp/game')
+    else:
+        HttpResponseRedirect('/myapp/index')
+
+    return render_to_response('myapp/ready.html', context_dict, context)
+
+def get_user_target(user_id=None):
+    ## ADD ADAM FUNCTION
+    return User.objects.all()[0]
+
+#@login_required
+def game(request):
+    context = RequestContext(request)
+
+    
+
+    # Checks only the last entry of the game table
+    game = Game.objects.all().reverse()[0]
+
+    print game.ready_users
+
+    game.ready_users += 1
+    game.save()
+
+    if game.ready_users >= game.users_needed:
+        HttpResponseRedirect('/myapp/game')
+    else:
+        HttpResponseRedirect('/myapp/index')
+
+    return render_to_response('myapp/ready.html', context_dict, context)
