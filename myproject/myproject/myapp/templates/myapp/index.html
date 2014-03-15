@@ -10,7 +10,7 @@
                   <h4>Alive users</h4>
                   <ul>
                   {% for user in alive_users %}
-                    <li>{{ user.user.first_name }}</li>
+                    <li>{{ user.first_name }}</li>
                   {% endfor %}
                   </div>
                 <div class="col-md-10">
@@ -22,7 +22,7 @@
                   <h4>Dead users</h4>
                   <ul>
                   {% for user in dead_users %}
-                    <li>{{ user.user.first_name }}</li>
+                    <li>{{ user.first_name }}</li>
                   {% endfor %}
                   </div>
                 <div class="col-md-10">
