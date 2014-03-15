@@ -1,0 +1,11 @@
+Django==1.6.2
+distribute==0.7.3
+mccabe==0.2.1
+pep8==1.4.6
+pyflakes==0.7.3
+pysqlite==2.6.3
+stevedore==0.14.1
+virtualenv==1.10
+virtualenv-clone==0.2.4
+virtualenvwrapper==4.2
+wsgiref==0.1.2
