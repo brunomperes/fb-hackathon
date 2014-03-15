@@ -1,0 +1,33 @@
+{% extends 'myapp/base.html' %}
+
+{% block body_block %}
+    <div class="page-header">
+      <h1>Start match</h1>
+    </div>
+
+              <div class="row">
+                <div class="col-md-2 well pull-left">
+                  <h4>Alive users</h4>
+                  <ul>
+                  {% for user in alive_users %}
+                    <li>{{ user.user.first_name }}</li>
+                  {% endfor %}
+                  </div>
+                <div class="col-md-10">
+                    <a class="btn btn-lg btn-warning" href="/myapp/ready">Ready</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2 well pull-left">
+                  <h4>Dead users</h4>
+                  <ul>
+                  {% for user in dead_users %}
+                    <li>{{ user.user.first_name }}</li>
+                  {% endfor %}
+                  </div>
+                <div class="col-md-10">
+                </div>
+              </div>
+
+
+{% endblock %}
