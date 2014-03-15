@@ -116,3 +116,7 @@ def death(request):
         killed_user.save()
 
     return render_to_response('myapp/index.html', context_dict, context)
+
+def wtf(request):
+    context = RequestContext(request)
+    return render_to_response('myapp/wtf.html', {}, context)
