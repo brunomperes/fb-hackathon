@@ -42,4 +42,3 @@ coverage.xml
 # Translations
 *.mo
 venv
-.gitignore
