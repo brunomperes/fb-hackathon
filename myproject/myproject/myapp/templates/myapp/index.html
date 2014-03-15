@@ -10,11 +10,11 @@
                   <h4>Alive users</h4>
                   <ul>
                   {% for user in alive_users %}
-                    <li>{{ user.first_name }}</li>
+                    <li>{{ user.user.first_name }}</li>
                   {% endfor %}
                   </div>
                 <div class="col-md-10">
-                    <a class="btn btn-lg btn-warning" href="/myapp/ready">Ready</a>
+                    <a class="btn btn-lg col-md-5 btn-warning" data-user-id="{{ user.id }}" id="ready_btn">Ready</a>
                 </div>
               </div>
               <div class="row">
@@ -22,7 +22,7 @@
                   <h4>Dead users</h4>
                   <ul>
                   {% for user in dead_users %}
-                    <li>{{ user.first_name }}</li>
+                    <li>{{ user.user.first_name }}</li>
                   {% endfor %}
                   </div>
                 <div class="col-md-10">

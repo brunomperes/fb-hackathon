@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from myproject.myapp.models import Game, UserProfile
 from django.contrib.auth.models import User
@@ -69,23 +69,19 @@ def index(request):
 def ready(request):
     context = RequestContext(request)
 
-    experiment_list = User.objects.all()
-    context_dict = {'experiments': experiment_list}
-
     # Checks only the last entry of the game table
     game = Game.objects.all().reverse()[0]
+    
+    if request.GET.get('data-user-id'):
+        game.ready_users += 1
+        game.save()
 
     print game.ready_users
 
-    game.ready_users += 1
-    game.save()
-
     if game.ready_users >= game.users_needed:
-        HttpResponseRedirect('/myapp/game')
-    else:
-        HttpResponseRedirect('/myapp/index')
+        return HttpResponse('True')
 
-    return render_to_response('myapp/ready.html', context_dict, context)
+    return HttpResponse('False')
 
 def get_user_target(user_id=None):
     ## ADD ADAM FUNCTION
