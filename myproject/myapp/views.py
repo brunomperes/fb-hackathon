@@ -84,26 +84,35 @@ def ready(request):
     return HttpResponse('False')
 
 def get_user_target(user_id=None):
-    ## ADD ADAM FUNCTION
-    return User.objects.all()[0]
+    ## ADD ADAM FUNCTION HERE
+    return 'Bruno Peres'
 
 #@login_required
 def game(request):
     context = RequestContext(request)
 
-    
+    context_dict = {}
 
     # Checks only the last entry of the game table
     game = Game.objects.all().reverse()[0]
 
-    print game.ready_users
+    target_name = get_user_target(request.user.id)
 
-    game.ready_users += 1
-    game.save()
+    context_dict['target_name'] = target_name
 
-    if game.ready_users >= game.users_needed:
-        HttpResponseRedirect('/myapp/game')
-    else:
-        HttpResponseRedirect('/myapp/index')
+    return render_to_response('myapp/game.html', context_dict, context)
 
-    return render_to_response('myapp/ready.html', context_dict, context)
+#@login_required
+def death(request):
+    context = RequestContext(request)
+
+    user_id = request.POST.get('user_id')
+
+    context_dict = {}
+
+    if request.method == 'POST' and user_id:
+        killed_user = UserProfile.objects.get(id=int(user_id))
+        killed_user.alive = False
+        killed_user.save()
+
+    return render_to_response('myapp/index.html', context_dict, context)

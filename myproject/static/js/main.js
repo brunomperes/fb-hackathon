@@ -13,7 +13,7 @@ $('#ready_btn').click(function(event){
            {    
                 button.removeClass('btn-warning');
                 button.addClass('btn-success disabled');
-                button.html('WAITING...')
+                button.html('Waiting for more users...')
            }
      });
 

@@ -6,5 +6,6 @@ urlpatterns = patterns('myproject.myapp.views',
     url(r'^ready/$', 'ready', name='ready'),
     url(r'^game/$', 'game', name='game'),
     url(r'^list/$', 'list', name='list'),
-    url(r'^login/$', 'login', name='login')
+    url(r'^login/$', 'login', name='login'),
+    url(r'^death/$', 'death', name='death'),
 )

@@ -1,0 +1,33 @@
+{% extends 'myapp/base.html' %}
+
+{% block body_block %}
+    <div class="page-header">
+      <h1>The game has began!</h1>
+    </div>
+
+    <h3>Your target is:</h3>
+    <br><br><br><br>
+    <div class="row text-center">
+      <div class="col-md-2 pull-left col-md-offset-3">
+        <img src="http://placehold.it/100x100">
+      </div>
+      <div class="col-md-2">
+      
+          <h2>{{ target_name }}</h2>
+      </div>
+    </div>
+    <br>
+    <div class="row text-center">
+    <div class="col-md-5 pull-left col-md-offset-3">
+    <br><br><br><br>
+        <em>Once you kill your target, you acquire his target</em><br><br><br><br><br>
+        <form id="death_form" method="post" action="/myapp/death/">
+        {% csrf_token %}
+        <input type="hidden" value="{{ user.id }}"/>
+        <input type="submit" name="submit" value="I'm dead"  class="btn btn-danger btn-lg btn-block"/>
+    </form>
+      </div>
+    </div>
+
+
+{% endblock %}
