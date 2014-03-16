@@ -10,5 +10,5 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	url(r'^admin/', include(admin.site.urls)),
 	(r'^myapp/', include('myproject.myapp.urls')),
-	(r'^$', RedirectView.as_view(url='/myapp/list/')), # Just for ease of use.
+	(r'^$', RedirectView.as_view(url='/myapp/')),
 )
