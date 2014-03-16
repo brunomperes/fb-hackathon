@@ -39,6 +39,10 @@ def login(request):
     else:
         return render_to_response('myapp/login.html', {}, context)
 
+def list(request):
+    context = RequestContext(request)
+    return render_to_response('myapp/settings.html', {}, context)
+
 def settings(request):
     context = RequestContext(request)
 
@@ -47,7 +51,7 @@ def settings(request):
 
         print request.POST.get('facebook-id')
         print request.POST.get('facebook-name')
-        
+
 
     
     return render_to_response('myapp/settings.html', {}, context)

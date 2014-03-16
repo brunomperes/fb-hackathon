@@ -61,14 +61,14 @@ def populate():
 # Defining the add functions for our models
 def add_user(username, first_name, email, password, is_active):
 
-    u = User.objects.get_or_create(username = username, first_name = first_name, email = email, password = password, is_active = is_active, fb_id='1', hunts_fb_id='1')[0]
+    u = User.objects.get_or_create(username = username, first_name = first_name, email = email, password = password, is_active = is_active)[0]
     u.set_password(password)
     u.save()
     return u
 
 def add_userprofile(alive, user):
 
-    r = UserProfile.objects.get_or_create(alive = alive, user = user)[0]
+    r = UserProfile.objects.get_or_create(alive = alive, user = user, fb_id='1', hunts_fb_id='1')[0]
     return r
 
 
