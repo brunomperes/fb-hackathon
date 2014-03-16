@@ -151,8 +151,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     # Required by allauth template tags
     "django.core.context_processors.request",
     # allauth specific context processors
-    "allauth.account.context_processors.account",
-    "allauth.socialaccount.context_processors.socialaccount",
     "django.contrib.auth.context_processors.auth",
 )
 
