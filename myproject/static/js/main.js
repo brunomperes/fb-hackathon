@@ -1,3 +1,6 @@
+var fb;
+
+
 $('#ready_btn').click(function(event){
     event.preventDefault();
 
@@ -27,7 +30,7 @@ function checkAgain(){
       url: '/myapp/ready',
       success: function (data) {
         if (data <= 0){
-            window.location.href = "/myapp/game";
+            window.location.href = "/myapp/";
         } else {
             setInterval(checkAgain, 1000);
         }
@@ -35,3 +38,27 @@ function checkAgain(){
     })
 }
 
+function isLogged(){
+  if (FB == null && fb == null){
+    return false;
+  }
+  return true;
+}
+
+// Verifies on every 
+function authenticationStep(){
+  if (!isLogged()){
+    window.location.href = "/myapp/login";
+  }
+  else {
+    
+  }
+}
+
+$(window).load(function() {
+  authenticationStep();
+  FB.api('/me', function(response) {
+    console.log(response);
+  });
+
+});

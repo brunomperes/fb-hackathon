@@ -26,16 +26,16 @@ ADMINS = (
 MANAGERS = ADMINS
 
 import dj_database_url
-DATABASES = {'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db')}
+#DATABASES = {'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db')}
 
 #DATABASES = {'default': dj_database_url.config(default=os.environ['DATABASE_URL'])}
-#DATABASE_PATH = os.path.join(BASE_DIR, 'database.db')
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': DATABASE_PATH,
-#   }
-#}
+DATABASE_PATH = os.path.join(BASE_DIR, 'database.db')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': DATABASE_PATH,
+   }
+}
 
 #DATABASES = {
 #    'default': {
@@ -132,6 +132,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,13 +140,22 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     
     'myproject.myapp',
+    #'social_auth'
 )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # Required by allauth template tags
+    "django.core.context_processors.request",
+    # allauth specific context processors
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
+    "django.contrib.auth.context_processors.auth",
+)
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

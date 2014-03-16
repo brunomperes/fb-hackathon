@@ -5,22 +5,46 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from myproject.myapp.models import Game, UserProfile
 from django.contrib.auth.models import User
-
+from django.contrib.auth.decorators import login_required
 from myproject.myapp.models import Document
 from myproject.myapp.forms import DocumentForm
 
 def login(request):
+    context = RequestContext(request)
+
     if request.method == 'POST':
-        print "post"
-        form = DocumentForm(request.POST)
-        print form.data
-        return render_to_response(
-                'myapp/login.html',
-                {})
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Use Django's machinery to attempt to see if the username/password
+        # combination is valid - a User object is returned if it is.
+        user = authenticate(username=username, password=password)
+
+        # If we have a User object, the details are correct.
+        # If None (Python's way of representing the absence of a value), no user
+        # with matching credentials was found.
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+
+                return HttpResponseRedirect('/myapp/')
+
+            else:
+                return render_to_response('myapp/login.html', context_dict, context)
+
+        else:
+            # Bad login details were provided. So we can't log the user in.
+            return render_to_response('myapp/login.html', context_dict, context)
+
     else:
-        return render_to_response(
-                'myapp/login.html',
-                {})
+        return render_to_response('myapp/login.html', {}, context)
+
+@login_required
+def user_logout(request):
+
+    logout(request)
+
+    return HttpResponseRedirect('/myapp/')
 
 def list(request):
     # Handle file upload
