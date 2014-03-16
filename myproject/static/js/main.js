@@ -13,7 +13,7 @@ $('#ready_btn').click(function(event){
            {    
                 button.removeClass('btn-warning');
                 button.addClass('btn-success disabled');
-                button.html('Waiting for more users...')
+                button.html('Waiting for more users...(' + int(data) +')' )
            }
      });
 
@@ -26,7 +26,7 @@ function checkAgain(){
       data: '',
       url: '/myapp/ready',
       success: function (data) {
-        if (data == 'True'){
+        if (data <= 0){
             window.location.href = "/myapp/game";
         } else {
             setInterval(checkAgain, 1000);

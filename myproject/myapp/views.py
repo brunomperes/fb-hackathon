@@ -78,10 +78,7 @@ def ready(request):
 
     print game.ready_users
 
-    if game.ready_users >= game.users_needed:
-        return HttpResponse('True')
-
-    return HttpResponse('False')
+    return HttpResponse(game.ready_users - game.users_needed)
 
 def get_user_target(user_id=None):
     ## ADD ADAM FUNCTION HERE
