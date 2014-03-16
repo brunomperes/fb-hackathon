@@ -35,6 +35,8 @@ function checkAgain(){
     })
 }
 
+// ----------------------- FB LOGIN ---------------------
+
 window.fbAsyncInit = function() {
   FB.init({
     appId      : '764616396884782',
