@@ -20,6 +20,11 @@ $('#ready_btn').click(function(event){
     event.preventDefault();
 
     var button = $(this);
+    button.removeClass('btn-warning');
+    button.addClass('btn-success disabled');
+    button.html('Waiting for more users...(' + int(3) +')' )
+
+    return;
 
     var url = "/myapp/ready/"; // the script where you handle the form input.
 

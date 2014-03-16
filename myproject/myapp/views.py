@@ -4,12 +4,12 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from myproject.myapp.models import Game, UserProfile
+from myproject.myapp.forms import UserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from myproject.myapp.models import Document
-from myproject.myapp.forms import DocumentForm
+from django.contrib.auth import logout, authenticate, login
 
-def login(request):
+def user_login(request):
     context = RequestContext(request)
 
     if request.method == 'POST':
@@ -26,6 +26,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                change_alive_status(user.id, True)
 
                 return HttpResponseRedirect('/myapp/')
 
@@ -43,28 +44,68 @@ def list(request):
     context = RequestContext(request)
     return render_to_response('myapp/settings.html', {}, context)
 
+def register(request):
+    context = RequestContext(request)
+
+    registered = False
+
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+
+        # If the two forms are valid...
+        if user_form.is_valid():
+            user = user_form.save()
+
+            # Once hashed, update the user object.
+            user.set_password(user.password)
+            user.save()
+
+            registered = True
+
+            user.password = user_form.cleaned_data['password']
+            user = authenticate(username=user.username, password=user.password)
+            login(request, user)
+            return HttpResponseRedirect("/myapp/")
+
+        else:
+            print user_form.errors
+
+    else:
+        user_form = UserForm()
+
+    return render_to_response(
+            'myapp/register.html', {
+                        'user_form': user_form, 
+                        'registered': registered
+                    },
+                    context)
+
 def settings(request):
     context = RequestContext(request)
 
+    print 'POST'
     if request.method == 'POST':
-        fb_name = request.POST.get('facebook-id')
-
-        print request.POST.get('facebook-id')
-        print request.POST.get('facebook-name')
-
-
+        fb_id = request.POST.get('facebook-id')
+        print fb_id
+        # SHOULD UPDATE ON THE DATABASE THE ID, but we don't know the user.id as it is not authenticated
     
     return render_to_response('myapp/settings.html', {}, context)
 
+def change_alive_status(user_id, status=False):
+    user = User.objects.get(id=int(user_id))
+    user_profile = UserProfile.objects.get(user=user)
+    user_profile.alive = status
+    user_profile.save()
+
 @login_required
 def user_logout(request):
-
+    change_alive_status(user.id, False)
     logout(request)
 
     return HttpResponseRedirect('/myapp/')
 
 
-#@login_required
+@login_required
 def index(request):
     context = RequestContext(request)
 
@@ -83,7 +124,7 @@ def index(request):
 
     return render_to_response('myapp/index.html', context_dict, context)
 
-#@login_required
+@login_required
 def ready(request):
     context = RequestContext(request)
 
@@ -102,22 +143,23 @@ def get_user_target(user_id=None):
     ## ADD ADAM FUNCTION HERE
     return 'Bruno Peres'
 
-#@login_required
+@login_required
 def game(request):
     context = RequestContext(request)
 
     context_dict = {}
 
-    # Checks only the last entry of the game table
+    # Checks only the newest entry of the game table
     game = Game.objects.all().reverse()[0]
 
     target_name = get_user_target(request.user.id)
 
     context_dict['target_name'] = target_name
+    context_dict['target_picture_link'] = 'http://placehold.it/100x100'
 
     return render_to_response('myapp/game.html', context_dict, context)
 
-#@login_required
+@login_required
 def death(request):
     context = RequestContext(request)
 

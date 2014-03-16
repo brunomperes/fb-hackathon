@@ -29,9 +29,13 @@
             <div class="collapse navbar-collapse">
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
-                            <li><a href="/myapp/" onclick="FB.logout(function(response) {});"></a></li>
-                            <!-- <li><a href="/myapp/wtf/">Register</a></li> -->
-                            <!-- <li><a href="/myapp/login/">Login</a></li>-->
+                            {% if user.is_authenticated %}
+                            <li><a href="/myapp/settings/">{{ user.first_name }}</a></li>
+                            <li><a href="/myapp/logout/">Logout</a></li>
+                            {% else %}
+                            <li><a href="/myapp/register/">Register</a></li>
+                            <li><a href="/myapp/login/">Login</a></li>
+                            {% endif %}
 
                     </ul>
                 </div>
