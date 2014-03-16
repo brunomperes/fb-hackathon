@@ -26,16 +26,16 @@ ADMINS = (
 MANAGERS = ADMINS
 
 import dj_database_url
-#DATABASES = {'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db')}
+DATABASES = {'default': dj_database_url.config(default='postgres://foo:bar@localhost:5432/db')}
 
 #DATABASES = {'default': dj_database_url.config(default=os.environ['DATABASE_URL'])}
-DATABASE_PATH = os.path.join(BASE_DIR, 'database.db')
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DATABASE_PATH,
-   }
-}
+#DATABASE_PATH = os.path.join(BASE_DIR, 'database.db')
+#DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+   #     'NAME': DATABASE_PATH,
+   #}
+#}
 
 #DATABASES = {
 #    'default': {
