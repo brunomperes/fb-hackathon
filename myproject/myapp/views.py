@@ -39,35 +39,25 @@ def login(request):
     else:
         return render_to_response('myapp/login.html', {}, context)
 
+def settings(request):
+    context = RequestContext(request)
+
+    if request.method == 'POST':
+        fb_name = request.POST.get('facebook-id')
+
+        print request.POST.get('facebook-id')
+        print request.POST.get('facebook-name')
+        
+
+    
+    return render_to_response('myapp/settings.html', {}, context)
+
 @login_required
 def user_logout(request):
 
     logout(request)
 
     return HttpResponseRedirect('/myapp/')
-
-def list(request):
-    # Handle file upload
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            newdoc = Document(docfile = request.FILES['docfile'])
-            newdoc.save()
-
-            # Redirect to the document list after POST
-            return HttpResponseRedirect(reverse('myproject.myapp.views.list'))
-    else:
-        form = DocumentForm() # A empty, unbound form
-
-    # Load documents for the list page
-    documents = Document.objects.all()
-
-    # Render list page with the documents and the form
-    return render_to_response(
-        'myapp/list.html',
-        {'documents': documents, 'form': form},
-        context_instance=RequestContext(request)
-    )
 
 
 #@login_required
@@ -137,3 +127,4 @@ def death(request):
         killed_user.save()
 
     return render_to_response('myapp/index.html', context_dict, context)
+

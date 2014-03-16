@@ -1,5 +1,20 @@
 var fb;
 
+$('#settings_form').submit(function(event){
+    event.preventDefault();
+
+    var id;
+
+    FB.api('/me', {fields: 'id'}, function(response) {
+      if (response.error !== undefined){
+        id = response.id; 
+      }
+    });
+
+    $(this).find('input[name="facebook-id"]').val(id);
+
+    return true;
+});
 
 $('#ready_btn').click(function(event){
     event.preventDefault();
@@ -39,7 +54,7 @@ function checkAgain(){
 }
 
 function isLogged(){
-  if (FB == null && fb == null){
+  if (FB == null && fb == null && FB.getAccessToken === undefined){
     return false;
   }
   return true;
