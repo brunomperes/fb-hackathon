@@ -12,8 +12,8 @@ class Document(models.Model):
 class UserProfile(models.Model):
     alive = models.BooleanField()
     user = models.OneToOneField(User)
-    fb_id = models.CharField(max_length=2048)
-    hunts_fb_id = models.CharField(max_length=2048)
+    fb_id = models.CharField(max_length=2048, default=0, blank=True)
+    hunts_fb_id = models.CharField(max_length=2048, default=0, blank=True)
 
     def __unicode__(self):
         return self.user.username
