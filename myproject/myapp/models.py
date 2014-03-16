@@ -23,4 +23,4 @@ class Game(models.Model):
     ready_users = models.IntegerField()
 
     def __unicode__(self):
-        return self.users_needed
+        return str(self.users_needed)
