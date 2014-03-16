@@ -35,7 +35,7 @@ function checkAgain(){
     })
 }
 
-/*window.fbAsyncInit = function() {
+window.fbAsyncInit = function() {
   FB.init({
     appId      : '764616396884782',
     status     : true, // check login status
@@ -90,4 +90,4 @@ function checkAgain(){
     FB.api('/me', function(response) {
       console.log('Good to see you, ' + response.name + '.');
     });
-  }*/
+  }
